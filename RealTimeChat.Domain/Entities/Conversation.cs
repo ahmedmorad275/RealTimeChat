@@ -7,6 +7,8 @@ namespace RealTimeChat.Domain.Entities
     {
         public ConversationType Type { get; private set; }
 
+        public Guid? LastMessageId { get; set; }
+
         public ICollection<ConversationMember> Members { get; set; } = [];
     }
 }
