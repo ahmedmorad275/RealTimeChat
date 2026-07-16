@@ -9,5 +9,7 @@ namespace RealTimeChat.Domain.Entities
         public string? ProfilePictureUrl { get; set; }
 
         public DateTime? LastSeenAt { get; set; }
+
+        public bool IsOnline { get; set; }
     }
 }
