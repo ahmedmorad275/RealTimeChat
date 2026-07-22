@@ -2,16 +2,16 @@ using FluentValidation;
 
 namespace RealTimeChat.Application.Authentication.Login
 {
-  public class LoginCommandValidator : AbstractValidator<LoginCommand>
-  {
-    public LoginCommandValidator()
+    public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
-      RuleFor(x => x.Email)
-        .NotEmpty()
-        .EmailAddress();
+        public LoginCommandValidator()
+        {
+            RuleFor(x => x.Email)
+              .NotEmpty()
+              .EmailAddress();
 
-      RuleFor(x => x.Password)
-        .NotEmpty();
+            RuleFor(x => x.Password)
+              .NotEmpty();
+        }
     }
-  }
 }

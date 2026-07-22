@@ -1,22 +1,26 @@
-using System.Reflection;
 using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using RealTimeChat.Application.Common.Behaviors;
+using System.Reflection;
 
 namespace RealTimeChat.Application
 {
-  public static class DependencyInjection
-  {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static class DependencyInjection
     {
-      services.AddMediatR(cfg =>
-      {
-        cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-      });
+        public static IServiceCollection AddApplication(this IServiceCollection services)
+        {
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            });
 
-      services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-      services.AddAutoMapper(Assembly.GetExecutingAssembly());
-      return services;
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            return services;
+        }
     }
-  }
 }

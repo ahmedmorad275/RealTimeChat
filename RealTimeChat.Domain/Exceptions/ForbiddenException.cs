@@ -1,9 +1,9 @@
 namespace RealTimeChat.Domain.Exceptions
 {
-  public class ForbiddenException : AppException
-  {
-    public ForbiddenException(string msg) : base(msg, 403, "Forbidden")
+    public class ForbiddenException : AppException
     {
+        public ForbiddenException(string msg) : base(msg, 403, "Forbidden")
+        {
+        }
     }
-  }
 }

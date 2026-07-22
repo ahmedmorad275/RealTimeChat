@@ -1,12 +1,12 @@
 namespace RealTimeChat.Domain.Exceptions
 {
-  public class ValidationException : AppException
-  {
-    public IDictionary<string, string[]> Errors { get; }
-
-    public ValidationException(IDictionary<string, string[]> errors) : base("One or more validation errors occured.", 400, "Validation Error")
+    public class ValidationException : AppException
     {
-      Errors = errors;
+        public IDictionary<string, string[]> Errors { get; }
+
+        public ValidationException(IDictionary<string, string[]> errors) : base("One or more validation errors occured.", 400, "Validation Error")
+        {
+            Errors = errors;
+        }
     }
-  }
 }
