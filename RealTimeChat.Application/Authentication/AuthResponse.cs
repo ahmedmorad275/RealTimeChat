@@ -1,6 +1,6 @@
-namespace RealTimeChat.Application.Authentication.Register
+namespace RealTimeChat.Application.Authentication
 {
-  public class RegisterResponse
+  public class AuthResponse
   {
     public Guid Id { get; set; }
     public string FullName { get; set; } = string.Empty;

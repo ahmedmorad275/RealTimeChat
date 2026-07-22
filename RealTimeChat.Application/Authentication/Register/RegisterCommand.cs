@@ -2,7 +2,7 @@ using MediatR;
 
 namespace RealTimeChat.Application.Authentication.Register
 {
-  public class RegisterCommand : IRequest<RegisterResponse>
+  public class RegisterCommand : IRequest<AuthResponse>
   {
     public string FullName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
