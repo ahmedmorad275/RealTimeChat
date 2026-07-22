@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RealTimeChat.Application.Interfaces.Services;
 using RealTimeChat.Domain.Entities;
@@ -12,9 +13,9 @@ namespace RealTimeChat.Infrastructure.Authentication
   {
     private readonly JwtOptions _options;
 
-    public JwtService(JwtOptions options)
+    public JwtService(IOptions<JwtOptions> options)
     {
-      _options = options;
+      _options = options.Value;
     }
 
     public string GenerateAccessToken(ApplicationUser user)
@@ -44,9 +45,9 @@ namespace RealTimeChat.Infrastructure.Authentication
 
     public string GenerateRefreshToken()
     {
-      var token = RandomNumberGenerator.GetBytes(64).ToString();
+      var token = RandomNumberGenerator.GetBytes(64);
 
-      return token!;
+      return Convert.ToBase64String(token);
     }
   }
 }
