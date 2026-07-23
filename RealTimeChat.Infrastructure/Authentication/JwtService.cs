@@ -49,5 +49,10 @@ namespace RealTimeChat.Infrastructure.Authentication
 
             return Convert.ToBase64String(token);
         }
+
+        public DateTime GetRefreshTokenExpiryDate()
+        {
+            return DateTime.UtcNow.AddDays(_options.RefreshTokenExpirationDays);
+        }
     }
 }

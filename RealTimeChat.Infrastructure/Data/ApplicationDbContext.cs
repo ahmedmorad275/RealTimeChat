@@ -21,6 +21,8 @@ namespace RealTimeChat.Infrastructure.Data
         public DbSet<MessageReaction> MessageReactions => Set<MessageReaction>();
         public DbSet<ConversationMember> ConversationMembers => Set<ConversationMember>();
 
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

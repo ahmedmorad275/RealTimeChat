@@ -6,6 +6,6 @@ namespace RealTimeChat.Application.Interfaces.Services
   {
     string GenerateAccessToken(ApplicationUser user);
     string GenerateRefreshToken();
-
+    DateTime GetRefreshTokenExpiryDate();
   }
 }

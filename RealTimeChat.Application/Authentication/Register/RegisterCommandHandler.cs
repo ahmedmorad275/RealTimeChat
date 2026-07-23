@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using RealTimeChat.Application.Interfaces;
 using RealTimeChat.Application.Interfaces.Services;
 using RealTimeChat.Domain.Entities;
 using RealTimeChat.Domain.Exceptions;
@@ -10,10 +11,13 @@ namespace RealTimeChat.Application.Authentication.Register
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private IJwtService _jwtService;
-        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, IJwtService jwtService)
+        private readonly IApplicationDbContext _context;
+
+        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, IJwtService jwtService, IApplicationDbContext context)
         {
             _userManager = userManager;
             _jwtService = jwtService;
+            _context = context;
         }
 
         public async Task<AuthResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -37,12 +41,26 @@ namespace RealTimeChat.Application.Authentication.Register
 
             var token = _jwtService.GenerateAccessToken(user);
 
+            var generatedRefreshToken = _jwtService.GenerateRefreshToken();
+            var refreshTokenExpiry = _jwtService.GetRefreshTokenExpiryDate();
+
+            var refreshToken = new RefreshToken()
+            {
+                ExpiresAt = refreshTokenExpiry,
+                Token = generatedRefreshToken,
+                UserId = user.Id
+            };
+
+            await _context.RefreshTokens.AddAsync(refreshToken, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+
             return new AuthResponse()
             {
                 Email = user.Email,
                 FullName = user.FullName,
                 Id = user.Id,
-                Token = token
+                Token = token,
+                RefreshToken = generatedRefreshToken
             };
         }
     }

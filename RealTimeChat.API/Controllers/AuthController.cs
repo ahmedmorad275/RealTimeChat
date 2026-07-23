@@ -2,6 +2,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RealTimeChat.Application.Authentication;
 using RealTimeChat.Application.Authentication.Login;
+using RealTimeChat.Application.Authentication.Logout;
+using RealTimeChat.Application.Authentication.RefreshToken;
 using RealTimeChat.Application.Authentication.Register;
 
 namespace RealTimeChat.API.Controllers
@@ -29,6 +31,20 @@ namespace RealTimeChat.API.Controllers
         {
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+        [HttpPost("refresh")]
+        public async Task<ActionResult<AuthResponse>> Refresh(RefreshTokenCommand command)
+        {
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout(LogoutCommand command)
+        {
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }

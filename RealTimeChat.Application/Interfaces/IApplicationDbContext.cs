@@ -13,6 +13,7 @@ namespace RealTimeChat.Application.Interfaces
     DbSet<Conversation> Conversations { get; }
     DbSet<MessageReaction> MessageReactions { get; }
     DbSet<ConversationMember> ConversationMembers { get; }
+    DbSet<RefreshToken> RefreshTokens { get; }
     Task<int> SaveChangesAsync(CancellationToken ct = default);
   }
 }
