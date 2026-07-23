@@ -4,6 +4,7 @@ using RealTimeChat.Application.Interfaces;
 using RealTimeChat.Application.Interfaces.Services;
 using RealTimeChat.Domain.Entities;
 using RealTimeChat.Domain.Exceptions;
+using RefreshTokenEntity = RealTimeChat.Domain.Entities.RefreshToken;
 
 namespace RealTimeChat.Application.Authentication.Register
 {
@@ -44,7 +45,7 @@ namespace RealTimeChat.Application.Authentication.Register
             var generatedRefreshToken = _jwtService.GenerateRefreshToken();
             var refreshTokenExpiry = _jwtService.GetRefreshTokenExpiryDate();
 
-            var refreshToken = new RefreshToken()
+            var refreshToken = new RefreshTokenEntity()
             {
                 ExpiresAt = refreshTokenExpiry,
                 Token = generatedRefreshToken,

@@ -6,6 +6,7 @@ using RealTimeChat.Application.Interfaces;
 using RealTimeChat.Application.Interfaces.Services;
 using RealTimeChat.Domain.Entities;
 using RealTimeChat.Domain.Exceptions;
+using RefreshTokenEntity = RealTimeChat.Domain.Entities.RefreshToken;
 
 public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
 {
@@ -37,7 +38,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
         var generatedRefreshToken = _service.GenerateRefreshToken();
         var refreshTokenExpiry = _service.GetRefreshTokenExpiryDate();
 
-        var refreshToken = new RefreshToken()
+        var refreshToken = new RefreshTokenEntity()
         {
             ExpiresAt = refreshTokenExpiry,
             UserId = user.Id,
