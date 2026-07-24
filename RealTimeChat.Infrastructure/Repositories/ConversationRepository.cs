@@ -22,14 +22,14 @@ namespace RealTimeChat.Infrastructure.Repositories
 
         public async Task<Conversation?> GetConversationWithMembersAsync(Guid conversationId)
         {
-            return await _set.Include(x => x.Members)
+            return await _set.Include(x => x.Members).ThenInclude(m => m.User)
               .FirstOrDefaultAsync(x => x.Id == conversationId);
         }
 
         public async Task<Conversation?> GetPrivateConversationAsync(Guid firstUserId, Guid secondUserId)
         {
-            return await _set.Include(x => x.Members).
-              FirstOrDefaultAsync(x =>
+            return await _set.Include(x => x.Members).ThenInclude(m => m.User)
+              .FirstOrDefaultAsync(x =>
               x.Type == ConversationType.Private &&
               x.Members.Any(x => x.UserId == firstUserId) &&
               x.Members.Any(x => x.UserId == secondUserId));
@@ -37,7 +37,7 @@ namespace RealTimeChat.Infrastructure.Repositories
 
         public async Task<List<Conversation>> GetUserConversationsAsync(Guid userId)
         {
-            return await _set.Include(x => x.Members)
+            return await _set.Include(x => x.Members).ThenInclude(m => m.User)
               .Where(x => x.Members.Any(m => m.UserId == userId))
               .ToListAsync();
         }

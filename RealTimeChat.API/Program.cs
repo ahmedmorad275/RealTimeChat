@@ -1,6 +1,8 @@
 using Microsoft.OpenApi.Models;
 using RealTimeChat.API.Middlewares;
+using RealTimeChat.API.Services;
 using RealTimeChat.Application;
+using RealTimeChat.Application.Interfaces.Services;
 using RealTimeChat.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +47,10 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddProblemDetails();
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 var corsOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 
